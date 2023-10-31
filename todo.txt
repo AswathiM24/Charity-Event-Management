@@ -1,0 +1,23 @@
+http://127.0.0.1:8000/user/exam
+
+
+url=''
+url=user->exam
+
+
+default app(CEM) urls.py
+path('',include('home.urls'))
+path('user/',include('user.urls'))
+
+
+
+user urls.py
+path('exam',views.exampage)
+
+
+
+
+
+
+home urls.py
+path('',views.homepage)
