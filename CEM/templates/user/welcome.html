@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>welcome</h2>
+    <ul>
+      <li>Name : {{ object.name }}</li>
+      <li>Email :{{ object.email }}</li>
+      <li>Phone : {{ object.phone }}  </li>
+    </ul>
+
+
+    <a href="{% url 'user_logout' %}">Logout</a>
+  </body>
+</html>
