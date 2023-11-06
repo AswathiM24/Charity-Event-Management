@@ -3,6 +3,7 @@ from .models import User
 
 
 # Create your views here.
+
 def login(request):
     res={}
     if request.method=='POST':
@@ -55,6 +56,9 @@ def signup(request):
             return render(request,'user/signup.html',res)
     return render(request,'user/signup.html')
 
+
+def dashboard(request):
+    return render(request,'user/dashboard/dashboard.html')
 
 
     
