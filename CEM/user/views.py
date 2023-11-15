@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import User,Organization
 from .decorator import useronly
 
@@ -16,7 +16,7 @@ def login(request):
             print(obj)
             res['status']='Login success'
             request.session['userid'] = obj.id
-            return render(request,'user/login.html',res)
+            return redirect('user_dashboard')
 
             
         except Exception as e:
@@ -73,6 +73,11 @@ def organization(request):
     context['sub_page'] = 'Organisation Lists'
     context['organizations'] = Organization.objects.all()
     return render(request,'user/dashboard/Organisation_list.html',context)
+
+def logout(request):
+    request.session.flush()
+    return redirect('user_login')
+
 
 # {
 #   organization' : [
