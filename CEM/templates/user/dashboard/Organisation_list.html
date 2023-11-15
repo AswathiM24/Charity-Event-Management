@@ -1,0 +1,59 @@
+{% extends 'user/dashboard/Parent.html' %}
+{% load static%}
+
+{% block content %}
+
+
+<div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+
+        <div class="card-header">
+          <h5 class="mb-0">Organizations</h5>
+          <p class="text-sm mb-0">
+            list of organizations
+          </p>
+        </div>
+        <div class="table-responsive">
+          <table class="table p-2 table-flush" id="datatable-basic">
+            <thead class="thead-light">
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Locaiton</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Active</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fund</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">More</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for organisation in organizations %}
+              <tr>
+                <td class="text-sm font-weight-normal">{{ organisation.name }}</td>
+                <td class="text-sm font-weight-normal">{{ organisation.address }}</td>
+                <td class="text-sm font-weight-normal">{{ organisation.email }}</td>
+                <td class="text-sm font-weight-normal">{{ organisation.phone }}</td>
+                <td class="text-sm font-weight-normal">
+                  {% if organisation.status %}
+                    {{'Active'}}
+                  {% else %}
+                    {{ 'Deactive'}}
+                  {% endif %}
+                </td>
+                <td class="text-sm font-weight-normal">${{ organisation.fund_raised }}</td>
+                <td class="text-sm font-weight-normal"></td>
+                
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

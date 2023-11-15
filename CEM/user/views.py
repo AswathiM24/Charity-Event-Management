@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import User
-
+from .models import User,Organization
+from .decorator import useronly
 
 # Create your views here.
 
@@ -15,6 +15,7 @@ def login(request):
             print("Login success")
             print(obj)
             res['status']='Login success'
+            request.session['userid'] = obj.id
             return render(request,'user/login.html',res)
 
             
@@ -57,8 +58,41 @@ def signup(request):
     return render(request,'user/signup.html')
 
 
+@useronly
 def dashboard(request):
-    return render(request,'user/dashboard/dashboard.html')
+    logged_user = User.objects.get(id=request.session['userid'])
+    return render(request,'user/dashboard/dashboard.html',{'user':logged_user})
 
 
     
+
+def organization(request):
+    context={}
+    context['active'] ='organisation_list'
+    context['main_page'] = 'Organisation'
+    context['sub_page'] = 'Organisation Lists'
+    context['organizations'] = Organization.objects.all()
+    return render(request,'user/dashboard/Organisation_list.html',context)
+
+# {
+#   organization' : [
+#                    {
+#                       'id' :1,
+#                       'name' :'Test Organization',
+#                       'phone' :'987654321',
+#                       'email' :'testOrgEmail@gmail.com',
+#                       'address' :'Test Location',
+#                       'status' :False,
+#                       'fund_raised' :'0',
+#                    },
+#                    {
+#                       'id' :2,
+#                       'name' :'Test Organization',
+#                       'phone' :'987654321',
+#                       'email' :'testOrgEmail@gmail.com',
+#                       'address' :'Test Location',
+#                       'status' :False,
+#                       'fund_raised' :'0',
+#                    }
+#                  ]
+# }

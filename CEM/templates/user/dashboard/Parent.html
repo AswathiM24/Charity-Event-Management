@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -53,7 +54,7 @@
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link active"
+          <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link"
             aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -78,10 +79,10 @@
             </div>
             <span class="nav-link-text ms-1">Dashboards</span>
           </a>
-          <div class="collapse  show " id="dashboardsExamples">
+          <div class="collapse " id="dashboardsExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item active">
-                <a class="nav-link active" href="../../pages/dashboards/default.html">
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/dashboards/default.html">
                   <span class="sidenav-mini-icon"> D </span>
                   <span class="sidenav-normal"> Default </span>
                 </a>
@@ -133,7 +134,7 @@
           <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PAGES</h6>
         </li>
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link " aria-controls="pagesExamples"
+          <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {% if 'organisation' in active %} active {%endif%}" aria-controls="pagesExamples"
             role="button" aria-expanded="false">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -156,11 +157,11 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Organization</span>
+            <span class="nav-link-text ms-1">Organizations</span>
           </a>
-          <div class="collapse " id="pagesExamples">
+          <div class="collapse {% if 'organisation' in active %} show {%endif%}" id="pagesExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item ">
+              {% comment %} <li class="nav-item ">
                 <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#profileExample">
                   <span class="sidenav-mini-icon"> P </span>
                   <span class="sidenav-normal"> Profile <b class="caret"></b></span>
@@ -187,101 +188,17 @@
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#usersExample">
-                  <span class="sidenav-mini-icon"> U </span>
-                  <span class="sidenav-normal"> Fund <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="usersExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/users/reports.html">
-                        <span class="sidenav-mini-icon text-xs"> R </span>
-                        <span class="sidenav-normal"> Donations </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/users/new-user.html">
-                        <span class="sidenav-mini-icon text-xs"> N </span>
-                        <span class="sidenav-normal">Food </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#accountExample">
-                  <span class="sidenav-mini-icon"> A </span>
-                  <span class="sidenav-normal"> Events <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="accountExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/account/settings.html">
-                        <span class="sidenav-mini-icon text-xs"> S </span>
-                        <span class="sidenav-normal"> Calender </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/account/billing.html">
-                        <span class="sidenav-mini-icon text-xs"> B </span>
-                        <span class="sidenav-normal"> Payment </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/account/invoice.html">
-                        <span class="sidenav-mini-icon text-xs"> I </span>
-                        <span class="sidenav-normal"> Invoice </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/account/security.html">
-                        <span class="sidenav-mini-icon text-xs"> S </span>
-                        <span class="sidenav-normal"> Security </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#projectsExample">
+              </li> {% endcomment %}
+              <li class="nav-item {% if active == 'organisation_list' %} active {% endif %}">
+                <a class="nav-link {% if active == 'organisation_list' %} active {% endif %}" href="{% url 'user_organisation_list' %}">
                   <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal"> Projects <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="projectsExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/projects/general.html">
-                        <span class="sidenav-mini-icon text-xs"> G </span>
-                        <span class="sidenav-normal"> General </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/projects/timeline.html">
-                        <span class="sidenav-mini-icon text-xs"> T </span>
-                        <span class="sidenav-normal"> Timeline </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link " href="../../pages/pages/projects/new-project.html">
-                        <span class="sidenav-mini-icon text-xs"> N </span>
-                        <span class="sidenav-normal"> New Project </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/pages/pricing-page.html">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal"> Pricing Page </span>
+                  <span class="sidenav-normal">Organisations</span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="../../pages/pages/messages.html">
+                <a class="nav-link " href="">
                   <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal"> Messages </span>
+                  <span class="sidenav-normal"> Fund </span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -1033,9 +950,9 @@
               </a>
             </li>
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Default</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{main_page}}</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Default</h6>
+          <h6 class="font-weight-bolder mb-0">{{sub_page}}</h6>
         </nav>
         <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
           <a href="javascript:;" class="nav-link text-body p-0">
@@ -1055,10 +972,10 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="../../pages/authentication/signin/illustration.html"
-                class="nav-link text-body font-weight-bold px-0" target="_blank">
+              <a href="javascript:;"
+                class="nav-link text-body font-weight-bold px-0" >
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">{{user.name}}</span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
