@@ -3,7 +3,8 @@ from .models import User,Organization
 from .decorator import useronly
 
 # Create your views here.
-
+def get_user(request):
+    return User.objects.get(id=request.session['userid'])
 def login(request):
     res={}
     if request.method=='POST':
@@ -60,23 +61,30 @@ def signup(request):
 
 @useronly
 def dashboard(request):
-    logged_user = User.objects.get(id=request.session['userid'])
-    return render(request,'user/dashboard/dashboard.html',{'user':logged_user})
+    return render(request,'user/dashboard/dashboard.html',{'user':get_user(request)})
 
 
     
 
 def organization(request):
     context={}
+    context['user'] = get_user(request)
     context['active'] ='organisation_list'
     context['main_page'] = 'Organisation'
     context['sub_page'] = 'Organisation Lists'
     context['organizations'] = Organization.objects.all()
+    if request.method=='POST':
+        print(request.POST)
+        id = request.POST['id']
+        obj = Organization.objects.get(id=id)
+        obj.name = request.POST['name']
+        obj.address = request.POST['address']
+        obj.phone = request.POST['phone']
+        obj.email = request.POST['email']
+        obj.fund_raised = request.POST['fund_raised']
+        obj.save()
     return render(request,'user/dashboard/Organisation_list.html',context)
 
-def logout(request):
-    request.session.flush()
-    return redirect('user_login')
 
 
 # {
@@ -101,3 +109,10 @@ def logout(request):
 #                    }
 #                  ]
 # }
+
+
+@useronly
+def logout(request):
+    request.session.flush()
+    return redirect('user_login')
+
