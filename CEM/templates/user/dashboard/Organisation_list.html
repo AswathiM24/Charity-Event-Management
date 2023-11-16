@@ -62,6 +62,20 @@
                 <input style="width: 100%;" type="text" name="address" id="data-address" required />
               </div>
             </div>
+            
+            <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Status</label>
+              </div>
+              <div class="col-9">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="status" type="checkbox" id="data-status">
+                </div>              
+              </div>
+            </div>
+            
+
+ 
 
             <div class="row mt-2">
               <div class="col-3">
@@ -163,7 +177,7 @@
               <td class="text-sm font-weight-normal">
                 ${{ organisation.fund_raised }}
               </td>
-              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{organisation.name}}','{{organisation.email}}','{{organisation.phone}}','{{organisation.address}}','{{organisation.fund_raised}}','{{organisation.id}}');"</td>
+              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{organisation.name}}','{{organisation.email}}','{{organisation.phone}}','{{organisation.address}}','{{organisation.fund_raised}}','{{organisation.id}}','{{organisation.status}}');"</td>
                 <a role="button">
                   <svg
                     width="20"
@@ -208,7 +222,7 @@
 
 <script type="text/javascript">
 
-    function TriggerModal(name,email,phone,address,fund,id){
+    function TriggerModal(name,email,phone,address,fund,id,status){
         //console.log({name,email,phone,address,fund});
         document.getElementById('data-id').value = id;
         document.getElementById('data-name').value = name;
@@ -216,7 +230,11 @@
         document.getElementById('data-address').value = address;
         document.getElementById('data-fund').value = fund;
         document.getElementById('data-phone').value = phone;
-
+        if(status == 'True'){
+          document.getElementById('data-status').checked =true;
+        }else{
+          document.getElementById('data-status').checked =false;
+        }
         let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
 myModal.show();
 

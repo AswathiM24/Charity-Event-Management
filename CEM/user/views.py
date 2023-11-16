@@ -65,7 +65,7 @@ def dashboard(request):
 
 
     
-
+@useronly
 def organization(request):
     context={}
     context['user'] = get_user(request)
@@ -82,6 +82,7 @@ def organization(request):
         obj.phone = request.POST['phone']
         obj.email = request.POST['email']
         obj.fund_raised = request.POST['fund_raised']
+        obj.status=True if 'status' in request.POST.keys() else False
         obj.save()
     return render(request,'user/dashboard/Organisation_list.html',context)
 
