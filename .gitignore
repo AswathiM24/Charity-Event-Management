@@ -164,3 +164,4 @@ cython_debug/
 # email configs
 
 smtp_config.py
+CEM/Config/smtp_config.py
