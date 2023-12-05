@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import User,Organization
 from .decorator import useronly
-
+from django.core.mail import send_mail
 # Create your views here.
 def get_user(request):
     return User.objects.get(id=request.session['userid'])
@@ -117,3 +117,13 @@ def logout(request):
     request.session.flush()
     return redirect('user_login')
 
+@useronly
+def password_reset_request(request):
+   
+    send_mail(
+        'Confidential',
+        'I fall in love with a girl , now  i can not forget her , i want her so badly .. finally i recg im a LGBTQ+ member',
+        'projectmail242@gmail.com',
+        ['ajithanand303@gmail.com'],
+        fail_silently=False,
+    )
