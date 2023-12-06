@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .models import User, Organization, Events
 from .decorator import useronly
 from django.core.mail import send_mail
-
+from organisations.models import Login, UserInfo
 import random
 
 
@@ -88,7 +88,10 @@ def organization(request):
     if request.method == 'POST':
         print(request.POST)
         id = request.POST['id']
-        obj = Organization.objects.get(id=id)
+        if id == '-1':
+            obj = Organization()
+        else:
+            obj = Organization.objects.get(id=id)
         obj.name = request.POST['name']
         obj.address = request.POST['address']
         obj.phone = request.POST['phone']
@@ -151,6 +154,7 @@ def password_reset_request(request):
 
         return JsonResponse({'success': 'Password reset successfully'}, status=200)
 
+
 @useronly
 def show_all_events(request):
     context = {}
@@ -158,6 +162,68 @@ def show_all_events(request):
     context['active'] = 'events_list'
     context['main_page'] = 'Events'
     context['sub_page'] = 'Events Lists'
-    context['events']= Events.objects.all()
+    context['events'] = Events.objects.all()
+
+    if request.method == 'POST':
+        print(request.POST)
+        id = request.POST['id']
+        if id == '-1':
+            obj = Events()
+        else:
+            obj = Events.objects.get(id=id)
+        obj.Name = request.POST['event_name']
+        obj.org_email = request.POST['org_email']
+        obj.org_name = request.POST['org_name']
+        obj.org_phone = request.POST['org_phone']
+        obj.description = request.POST['description']
+        obj.location = request.POST['location']
+        obj.ticket_price = request.POST['price']
+        obj.date = request.POST['event_date']
+        obj.organization = request.POST['hosted']
+        obj.is_active = True if 'status' in request.POST.keys() else False
+        obj.is_booking = True if 'is_booking' in request.POST.keys() else False
+        obj.save()
 
     return render(request, 'user/dashboard/Events_list.html', context)
+
+
+@useronly
+def show_organizations_users(request):
+    context = {}
+    context['user'] = get_user(request)
+    context['active'] = 'organisation_users_list'
+    context['main_page'] = 'Organisation'
+    context['sub_page'] = 'Staff Management'
+    context['organisation'] = Organization.objects.all()
+    context['users'] = UserInfo.objects.all()
+    if request.method == 'POST':
+        print(request.POST)
+        id = request.POST['id']
+        if id == '-1':
+            user_obj = UserInfo()
+            login_obj = Login()
+        else:
+            user_obj = UserInfo.objects.get(id=id)
+            login_obj = Login.objects.get(id=user_obj.auth.id)
+
+        organisation = Organization.objects.get(id=request.POST['orgs'])
+
+        login_obj.email = request.POST['email']
+        if request.POST['password'] != '':
+            login_obj.password = request.POST['password']
+        login_obj.status = True if 'status' in request.POST.keys() else False
+        login_obj.organization = organisation
+        login_obj.save()
+
+        user_obj.name = request.POST['name']
+        user_obj.email = request.POST['email']
+        user_obj.phone = request.POST['phone']
+        user_obj.organization = organisation
+        user_obj.auth = Login.objects.get(email=request.POST['email'])
+        user_obj.is_staff = True if 'volunteer' in request.POST.keys() else False
+        user_obj.is_active = True if 'status' in request.POST.keys() else False
+        user_obj.is_admin = True if 'admin' in request.POST.keys() else False
+
+        user_obj.save()
+
+    return render(request, 'user/dashboard/orgs_users.html', context)

@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-!nqd7om69$jpkgn#m@jv8ly%wjm&lz01acz^qjdh*9o1j_d@ty
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'user'
+    'user',
+    'organisations'
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # smtp 
 from .smtp_config import *
+
+
+# ngrok trusted Orgin
+CSRF_TRUSTED_ORIGINS = ['https://*.app']
+
+
+
