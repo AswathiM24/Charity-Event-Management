@@ -167,8 +167,8 @@
                   <span class="sidenav-normal">Organisations</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="">
+              <li class="nav-item {% if active == 'organisation_users_list' %} active {% endif %}">
+                <a class="nav-link {% if active == 'organisation_users_list' %} active {% endif %}" href="{%  url 'user_staff_list' %}">
                   <span class="sidenav-mini-icon"> Acc </span>
                   <span class="sidenav-normal"> Org.Users </span>
                 </a>

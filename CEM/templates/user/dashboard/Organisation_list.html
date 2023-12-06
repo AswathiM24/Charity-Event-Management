@@ -108,7 +108,10 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h5 class="mb-0">Organizations</h5>
+        <div class="d-flex justify-content-between">
+            <h5 class="mb-0">Organizations</h5>
+            <a role="button" onclick="NewOrgsReg()"><span class="text-sans-serif"><i class="fa fa-plus"> New Org</i></span></a>
+        </div>
         <p class="text-sm mb-0">list of organizations</p>
       </div>
       <div class="table-responsive">
@@ -239,6 +242,13 @@
 myModal.show();
 
     }
+
+    function NewOrgsReg(){
+        document.getElementById('data-id').value = -1;
+        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+myModal.show();
+    }
+
 
     function submitForm(){
       document.getElementById('modal-org-form').submit();

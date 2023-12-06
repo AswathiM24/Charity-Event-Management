@@ -88,7 +88,10 @@ def organization(request):
     if request.method == 'POST':
         print(request.POST)
         id = request.POST['id']
-        obj = Organization.objects.get(id=id)
+        if id == '-1':
+            obj = Organization()
+        else:
+            obj = Organization.objects.get(id=id)
         obj.name = request.POST['name']
         obj.address = request.POST['address']
         obj.phone = request.POST['phone']
@@ -151,6 +154,7 @@ def password_reset_request(request):
 
         return JsonResponse({'success': 'Password reset successfully'}, status=200)
 
+
 @useronly
 def show_all_events(request):
     context = {}
@@ -158,6 +162,17 @@ def show_all_events(request):
     context['active'] = 'events_list'
     context['main_page'] = 'Events'
     context['sub_page'] = 'Events Lists'
-    context['events']= Events.objects.all()
+    context['events'] = Events.objects.all()
 
     return render(request, 'user/dashboard/Events_list.html', context)
+
+
+@useronly
+def show_organizations_users(request):
+    context = {}
+    context['user'] = get_user(request)
+    context['active'] = 'organisation_users_list'
+    context['main_page'] = 'Organisation'
+    context['sub_page'] = 'Staff Management'
+
+    return render(request, 'user/dashboard/orgs_users.html', context)
