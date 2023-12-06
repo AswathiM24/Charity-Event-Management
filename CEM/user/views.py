@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import User, Organization, Events
+from .models import User, Organization, Events ,Tickets
 from .decorator import useronly
 from django.core.mail import send_mail
 from organisations.models import Login, UserInfo
@@ -227,3 +227,21 @@ def show_organizations_users(request):
         user_obj.save()
 
     return render(request, 'user/dashboard/orgs_users.html', context)
+
+
+def show_tickets(request):
+    context = {}
+    context['user'] = get_user(request)
+    context['active'] = 'ticket_list'
+    context['main_page'] = 'Tickets'
+    context['sub_page'] = 'Tickets'
+    context['tickets'] = Tickets.objects.all()
+    if request.method == 'POST':
+        print(request.POST)
+        id = request.POST['id']
+        obj = Tickets.objects.get(id=id)
+        obj.action = request.POST.get('action')
+        obj.closed_date = request.POST.get('close_date')
+        obj.is_active = True if 'status' in request.POST.keys() else False
+        obj.save()
+    return render(request, 'user/dashboard/tickets.html',context)

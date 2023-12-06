@@ -11,4 +11,5 @@ urlpatterns = [
     path('reset_password', views.password_reset_request, name='user_reset_password'),
     path('events_list', views.show_all_events, name='user_events_list'),
     path('staff-list',views.show_organizations_users , name='user_staff_list'),
+    path('tickets',views.show_tickets, name='user_ticket_list'),
 ]

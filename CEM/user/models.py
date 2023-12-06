@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
@@ -51,3 +53,9 @@ class Events(models.Model):
     def __str__(self):
         return self.Name
 
+class Tickets(models.Model):
+    issue = models.CharField(max_length=1000)
+    is_active = models.BooleanField(default=True)
+    action= models.CharField(max_length=1000,blank=True,default='',null=True)
+    open_date = models.DateField()
+    closed_date = models.DateField(null=True, blank=True)

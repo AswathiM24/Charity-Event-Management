@@ -1,0 +1,242 @@
+{% extends 'user/dashboard/Parent.html' %} {% load static%} {% block content %}
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="EditModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ticket Details</h5>
+        <button
+          type="button"
+          class="btn-close text-dark"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="modal-org-form" method="POST" class="d-flex flex-column gap-2">
+          {% csrf_token %}
+          <div class="container">
+            <input type="hidden" name="id" id="data-id">
+            <div class="row">
+              <div class="col-3">
+                <label for="name">Issue</label>
+              </div>
+              <div class="col-9">
+                <input style="width: 100%;" type="text" name="name" id="data-issue" required />
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Action</label>
+              </div>
+              <div class="col-9">
+                  <textarea style="width: 100%;" id="data-action" name="action" required></textarea>
+              </div>
+            </div>
+
+
+            
+            <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Status</label>
+              </div>
+              <div class="col-9">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="status" type="checkbox" id="data-status">
+                </div>              
+              </div>
+            </div>
+            
+
+ 
+
+            <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Closing</label>
+              </div>
+              <div class="col-9">
+                <input style="width: 100%;" type="date" name="close_date" id="data-close-date" required />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn bg-gradient-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button onclick="submitForm();" type="button" class="btn bg-gradient-primary">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h5 class="mb-0">Tickets</h5>
+            <a role="button" class="btn btn-dark btn-round" onclick="NewOrgsReg()"><span class="text-sans-serif"><i class="fa fa-plus"> New Ticket</i></span></a>
+        </div>
+        <p class="text-sm mb-0">All tickets</p>
+      </div>
+      <div class="table-responsive">
+        <table
+          style="text-align: center"
+          class="table p-2 table-flush"
+          id="datatable-basic"
+        >
+          <thead class="thead-light">
+            <tr>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                No.
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Issue
+              </th>
+                <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Open Date
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Action
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Status
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Close Date
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                More
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in tickets %}
+            <tr>
+              <td class="text-sm font-weight-normal">
+                {{ forloop.counter }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {{ ticket.issue }}
+              </td>
+                <td class="text-sm font-weight-normal">
+                {{ ticket.open_date }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {{ ticket.action }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {% if ticket.is_active %} {{'Open'}} {% else %} {{'Closed'}} {% endif %}
+              </td>
+              <td class="text-sm font-weight-normal">
+                  {% if not ticket.closed_date  %} {{'Open'}} {% else %} {{ticket.closed_date}} {% endif %}
+              </td>
+              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{ticket.issue}}','{{ticket.action}}','{{ticket.is_active}}','{{ticket.closed_date}}','{{ticket.id}}');"</td>
+                <a role="button">
+                  <svg
+                    width="20"
+                    fill="#000000"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 494.936 494.936"
+                    xml:space="preserve"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g>
+                        <g>
+                          <path
+                            d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157 c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21 s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741 c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"
+                          ></path>
+                          <path
+                            d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069 c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963 c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692 C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107 l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005 c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                  <span> </span>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    function TriggerModal(issue,action,status,close_date,id){
+        //console.log({name,email,phone,address,fund});
+        document.getElementById('data-issue').value = issue;
+        document.getElementById('data-action').value =action;
+        document.getElementById('data-id').value =id;
+        if(status == 'True'){
+          document.getElementById('data-status').checked =true;
+        }else{
+          document.getElementById('data-status').checked =false;
+        }
+        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+myModal.show();
+
+    }
+
+    function NewOrgsReg(){
+        document.getElementById('data-id').value = -1;
+        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+myModal.show();
+    }
+
+
+    function submitForm(){
+      document.getElementById('modal-org-form').submit();
+      let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+myModal.close();
+    }
+</script>
+
+
+
+{% endblock %}
