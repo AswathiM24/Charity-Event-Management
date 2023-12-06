@@ -1,0 +1,68 @@
+{% extends 'user/dashboard/Parent.html' %} {% load static%} {% block content %}
+    
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+            <h5 class="mb-0">Payments</h5>
+        <p class="text-sm mb-0">All payment lists</p>
+      </div>
+      <div class="table-responsive">
+        <table
+          style="text-align: center"
+          class="table p-2 table-flush"
+          id="datatable-basic"
+        >
+          <thead class="thead-light">
+            <tr>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Name
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Phone
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Amount
+              </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Order_ID
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payment in payments %}
+            <tr>
+              <td class="text-sm font-weight-normal">
+                {{ payment.name }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {{ payment.phone }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {{ payment.amount }}
+              </td>
+              <td class="text-sm font-weight-normal">
+                {{ payment.order_id }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

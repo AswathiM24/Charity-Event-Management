@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import User, Organization, Events ,Tickets
+from .models import User, Organization, Events, Tickets, payments
 from .decorator import useronly
 from django.core.mail import send_mail
 from organisations.models import Login, UserInfo
@@ -245,3 +245,14 @@ def show_tickets(request):
         obj.is_active = True if 'status' in request.POST.keys() else False
         obj.save()
     return render(request, 'user/dashboard/tickets.html',context)
+
+def show_donations(request):
+    context = {}
+    context['user'] = get_user(request)
+    context['active'] = 'donations'
+    context['main_page'] = 'Dontaions'
+    context['sub_page'] = 'Donations'
+    context['payments'] = payments.objects.all()
+
+
+    return render(request, 'user/dashboard/donations.html',context)

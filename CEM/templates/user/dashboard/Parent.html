@@ -177,7 +177,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link "
+          <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link {% if 'donations' in active %} active {%endif%}"
             aria-controls="applicationsExamples" role="button" aria-expanded="false">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -205,10 +205,10 @@
             </div>
             <span class="nav-link-text ms-1">Transcations</span>
           </a>
-          <div class="collapse " id="applicationsExamples">
+          <div class="collapse {% if 'donation' in active %} show {%endif%}" id="applicationsExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item ">
-                <a class="nav-link " href="#">
+              <li class="nav-item  {% if active == 'donations' %} active {% endif %}">
+                <a class="nav-link {% if active == 'donations' %} active {% endif %} " href="{% url 'user_donation_list' %}">
                   <span class="sidenav-mini-icon"> A </span>
                   <span class="sidenav-normal"> Analytics </span>
                 </a>

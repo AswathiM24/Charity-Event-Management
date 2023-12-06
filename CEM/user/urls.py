@@ -12,4 +12,5 @@ urlpatterns = [
     path('events_list', views.show_all_events, name='user_events_list'),
     path('staff-list',views.show_organizations_users , name='user_staff_list'),
     path('tickets',views.show_tickets, name='user_ticket_list'),
+    path('donations',views.show_donations,name='user_donation_list'),
 ]
