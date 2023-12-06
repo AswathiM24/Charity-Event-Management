@@ -161,6 +161,34 @@
           </a>
           <div class="collapse {% if 'organisation' in active %} show {%endif%}" id="pagesExamples">
             <ul class="nav ms-4 ps-3">
+              {% comment %} <li class="nav-item ">
+                <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false" href="#profileExample">
+                  <span class="sidenav-mini-icon"> P </span>
+                  <span class="sidenav-normal"> Profile <b class="caret"></b></span>
+                </a>
+                <div class="collapse " id="profileExample">
+                  <ul class="nav nav-sm flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link " href="../../pages/pages/profile/overview.html">
+                        <span class="sidenav-mini-icon text-xs"> P </span>
+                        <span class="sidenav-normal"> Profile Overview </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="../../pages/pages/profile/teams.html">
+                        <span class="sidenav-mini-icon text-xs"> T </span>
+                        <span class="sidenav-normal"> Teams </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="../../pages/pages/profile/projects.html">
+                        <span class="sidenav-mini-icon text-xs"> A </span>
+                        <span class="sidenav-normal"> All Projects </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li> {% endcomment %}
               <li class="nav-item {% if active == 'organisation_list' %} active {% endif %}">
                 <a class="nav-link {% if active == 'organisation_list' %} active {% endif %}" href="{% url 'user_organisation_list' %}">
                   <span class="sidenav-mini-icon"> P </span>
@@ -169,8 +197,38 @@
               </li>
               <li class="nav-item ">
                 <a class="nav-link " href="">
-                  <span class="sidenav-mini-icon"> Acc </span>
-                  <span class="sidenav-normal"> Org.Users </span>
+                  <span class="sidenav-mini-icon"> M </span>
+                  <span class="sidenav-normal"> Fund </span>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/pages/rtl-page.html">
+                  <span class="sidenav-mini-icon"> R </span>
+                  <span class="sidenav-normal"> RTL </span>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/pages/widgets.html">
+                  <span class="sidenav-mini-icon"> W </span>
+                  <span class="sidenav-normal"> Widgets </span>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/pages/charts.html">
+                  <span class="sidenav-mini-icon"> C </span>
+                  <span class="sidenav-normal"> Charts </span>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/pages/sweet-alerts.html">
+                  <span class="sidenav-mini-icon"> S </span>
+                  <span class="sidenav-normal"> Sweet Alerts </span>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="../../pages/pages/notifications.html">
+                  <span class="sidenav-mini-icon"> N </span>
+                  <span class="sidenav-normal"> Notifications </span>
                 </a>
               </li>
             </ul>
