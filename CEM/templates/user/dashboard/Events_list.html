@@ -1,5 +1,7 @@
 {% extends 'user/dashboard/Parent.html' %} {% load static%} {% block content %}
 
+
+
 <!-- Modal -->
 <div
   class="modal fade"
@@ -62,7 +64,7 @@
                 <input style="width: 100%;" type="text" name="address" id="data-address" required />
               </div>
             </div>
-            
+
             <div class="row mt-2">
               <div class="col-3">
                 <label for="name">Status</label>
@@ -70,12 +72,12 @@
               <div class="col-9">
                 <div class="form-check form-switch">
                   <input class="form-check-input" name="status" type="checkbox" id="data-status">
-                </div>              
+                </div>
               </div>
             </div>
-            
 
- 
+
+
 
             <div class="row mt-2">
               <div class="col-3">
@@ -108,8 +110,8 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h5 class="mb-0">Organizations</h5>
-        <p class="text-sm mb-0">list of organizations</p>
+        <h5 class="mb-0">Events</h5>
+        <p class="text-sm mb-0">All event lists</p>
       </div>
       <div class="table-responsive">
         <table
@@ -127,27 +129,27 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Locaiton
+                Location
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Email
+                Organiser
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Phone
+                Contact
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Active
+                Status
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Fund
+                Date
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -157,27 +159,27 @@
             </tr>
           </thead>
           <tbody>
-            {% for organisation in organizations %}
+            {% for event in events %}
             <tr>
               <td class="text-sm font-weight-normal">
-                {{ organisation.name }}
+                {{ event.Name }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.address }}
+                {{ event.location }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.email }}
+                {{ event.org_name }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.phone }}
+                {{ event.org_phone }}
               </td>
               <td class="text-sm font-weight-normal">
-                {% if organisation.status %} {{'Active'}} {% else %} {{'Deactive'}} {% endif %}
+                {% if event.is_active %} {{'Up Coming'}} {% else %} {{'Done'}} {% endif %}
               </td>
               <td class="text-sm font-weight-normal">
-                ${{ organisation.fund_raised }}
+                {{ event.date }}
               </td>
-              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{organisation.name}}','{{organisation.email}}','{{organisation.phone}}','{{organisation.address}}','{{organisation.fund_raised}}','{{organisation.id}}','{{organisation.status}}');"</td>
+              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{event.name}}','{{event.email}}','{{event.phone}}','{{event.address}}','{{event.fund_raised}}','{{event.id}}','{{event.status}}');"</td>
                 <a role="button">
                   <svg
                     width="20"

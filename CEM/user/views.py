@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import User, Organization
+from .models import User, Organization, Events
 from .decorator import useronly
 from django.core.mail import send_mail
 
@@ -38,6 +38,7 @@ def login(request):
         except Exception as e:
             print('Login failed')
             res['status'] = 'Login failed'
+            res['code'] = 401  # not authenticated
             return render(request, 'user/login.html', res)
 
     return render(request, 'user/login.html')
@@ -149,3 +150,14 @@ def password_reset_request(request):
         )
 
         return JsonResponse({'success': 'Password reset successfully'}, status=200)
+
+@useronly
+def show_all_events(request):
+    context = {}
+    context['user'] = get_user(request)
+    context['active'] = 'events_list'
+    context['main_page'] = 'Events'
+    context['sub_page'] = 'Events Lists'
+    context['events']= Events.objects.all()
+
+    return render(request, 'user/dashboard/Events_list.html', context)
