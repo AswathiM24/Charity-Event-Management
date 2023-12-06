@@ -59,3 +59,12 @@ class Tickets(models.Model):
     action= models.CharField(max_length=1000,blank=True,default='',null=True)
     open_date = models.DateField()
     closed_date = models.DateField(null=True, blank=True)
+
+
+class payments(models.Model):
+    name = models.CharField(max_length=50)
+    phone = models.IntegerField()
+    order_id = models.CharField(max_length=255)
+    amount = models.IntegerField()
+    merchant_key = models.CharField(max_length=255)
+    status = models.BooleanField(default=False)

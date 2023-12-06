@@ -1,787 +1,898 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+  <head>
+    <title>Charity</title>
 
-<head>
-  <title>Charity</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" />
 
-  <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/font-awesome.min.css' %}" />
 
-  <link rel="stylesheet" href="{% static 'home/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/elegant-fonts.css' %}" />
 
-  <link rel="stylesheet" href="{% static 'home/css/elegant-fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/themify-icons.css' %}" />
 
-  <link rel="stylesheet" href="{% static 'home/css/themify-icons.css'%}">
+    <link rel="stylesheet" href="{% static 'home/css/swiper.min.css' %}" />
 
-  <link rel="stylesheet" href="{% static 'home/css/swiper.min.css'%}">
+    <link rel="stylesheet" href="{% static 'home/style.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <style>
+      .bg-gradient-secondary {
+        background-image: linear-gradient(310deg, #627594, #a8b8d8);
+      }
+      .bg-gradient-primary {
+        background-image: linear-gradient(310deg, #7928ca, #ff0080);
+      }
+    </style>
+  </head>
 
-  <link rel="stylesheet" href="{% static 'home/style.css'%}">
-</head>
+  <body>
+    <!-- Modal -->
 
-<body>
-  <header class="site-header">
-    <div class="top-header-bar">
-      <div class="container">
-        <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-lg-center">
-          <div
-            class="col-12 col-lg-8 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
-            <div class="header-bar-email">
-              MAIL: <a href="mailto:contact@charity.com"><span>contact@charity.com</span></a>
+    <header class="site-header">
+      <div style="background: linear-gradient(270deg, rgb(255,90,0) 0%, rgba(255,54,0,1) 100%)" class="top-header-bar">
+        <div class="container">
+          <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-lg-center">
+            <div class="col-12 col-lg-8 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+              <div class="header-bar-email">
+                MAIL: <a href="mailto:contact@charity.com"><span>contact@charity.com</span></a>
+              </div>
+              <div class="header-bar-text">
+                <p>
+                  PHONE: <span>+91 9876543210</span>
+                </p>
+              </div>
             </div>
-            <div class="header-bar-text">
-              <p>PHONE: <span>+91 9876543210</span></p>
-            </div>
-          </div>
-          <div
-            class="col-12 col-lg-4 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
-            <div class="donate-btn">
-              <a href="#">Donate Now</a>
+            <div class="col-12 col-lg-4 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+              <div class="donate-btn">
+                <button class="btn" style="background-color: white" onclick="TriggerModal()" role="button">Donate Now</button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="nav-bar">
+        <div class="container">
+          <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
+                  <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="modal-org-form" method="POST" class="d-flex flex-column gap-2">
+                    {% csrf_token %}
+                    <div class="container">
+                      <input type="hidden" name="id" id="data-id" />
+                      <div class="row">
+                        <div class="col-3">
+                          <label for="name">Name</label>
+                        </div>
+                        <div class="col-9">
+                          <input style="width: 100%;" type="text" name="name" id="data-name" required />
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label for="name">Phone</label>
+                        </div>
+                        <div class="col-9">
+                          <input style="width: 100%;" type="text" name="phone" id="data-phone" required />
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label for="name">Donation</label>
+                        </div>
+                        <div class="col-9">
+                          <input style="width: 100%;" type="text" name="donation" id="data-amount" required />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                  <button id="submit-btn" onclick="submitForm();" type="button" class="btn bg-gradient-primary">Donate</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+              <div class="site-branding d-flex align-items-center">
+                <a class="d-block" href="index.html" rel="home"><img class="d-block" src="{% static 'home/images/logo.png' %}" alt="logo" /></a>
+              </div>
+              <nav class="site-navigation d-flex justify-content-end align-items-center">
+                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                  <li class="current-menu-item">
+                    <a href="index.html">Home</a>
+                  </li>
+                  <li>
+                    <a href="about.html">About us</a>
+                  </li>
+                  <li>
+                    <a href="causes.html">Causes</a>
+                  </li>
+                  <li>
+                    <a href="portfolio.html">Gallery</a>
+                  </li>
+                  <li>
+                    <a href="news.html">News</a>
+                  </li>
+                  <li>
+                    <a href="contact.html">Contact</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'user_login' %}">Account</a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="hamburger-menu d-lg-none">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="swiper-container hero-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide hero-content-wrap">
+          <img src="{% static 'home/images/hero.jpg' %}" alt />
+          <div class="hero-content-overlay position-absolute w-100 h-100">
+            <div class="container h-100">
+              <div class="row h-100">
+                <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                  <header class="entry-header">
+                    <h1>Donate</h1>
+                    <h4>4 a better world</h4>
+                  </header>
+                  <div class="entry-content mt-4">
+                    <p>Welcome to Our Charity Event! At our heart, we believe in making a difference. 🌟 Our charity event serves two vital purposes: raising awareness for a specific cause and raising funds to create real impact.
+
+                      What We Stand For Our charity is more than just an organization; it’s a movement. We’re passionate about transforming lives, one step at a time. Whether it’s providing education, supporting healthcare, or championing environmental causes, we’re committed to leaving a positive mark on the world.</p>
+                  </div>
+                  <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                    <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                    <a href="#" class="btn orange-border">Read More</a>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide hero-content-wrap">
+          <img src="{% static 'home/images/education.webp' %}" alt />
+          <div class="hero-content-overlay position-absolute w-100 h-100">
+            <div class="container h-100">
+              <div class="row h-100">
+                <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                  <header class="entry-header">
+                    <h1>Donate</h1>
+                    <h4>4 a better world</h4>
+                  </header>
+                  <div class="entry-content mt-4">
+                    <p>“Stardust & Impact” Lights, camera, action! ✨ Our charity event isn’t just an event; it’s a spectacle. Picture this: A red carpet adorned with stars (both celestial and celebrity). Champagne flutes clinking, diamonds winking—welcome to The Glamorous Gala.
+
+                      Here, we blend philanthropy with pizzazz. Our auctioneer wears sequins, our donors wear tuxedos, and our cause wears a tiara. From live performances to exclusive art exhibits, this is where impact meets elegance.
+
+                      So grab your ticket and strike a pose. Because changing lives never looked this good.</p>
+                  </div>
+                  <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                    <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                    <a href="#" class="btn orange-border">Read More</a>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide hero-content-wrap">
+          <img src="{% static 'home/images/charity-kids.webp' %}" alt />
+          <div class="hero-content-overlay position-absolute w-100 h-100">
+            <div class="container h-100">
+              <div class="row h-100">
+                <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                  <header class="entry-header">
+                    <h1>Donate</h1>
+                    <h4>4 a better world</h4>
+                  </header>
+                  <div class="entry-content mt-4">
+                    <p>“Quest for Change” Calling all adventurers! 🌍 Ready for an epic journey? Our charity event isn’t your typical soirée—it’s an expedition. The Adventure Quest: treasure maps, hidden clues, and a cause worth fighting for.
+
+                      We’ll sail uncharted waters (metaphorically), climb metaphorical peaks, and unlock metaphorical chests of gold (okay, maybe some real ones too). Whether it’s a charity run through rugged terrain or a scavenger hunt in the heart of the city, this event is adrenaline-fueled impact.
+
+                      Gear up—your quest awaits!</p>
+                  </div>
+                  <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                    <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                    <a href="#" class="btn orange-border">Read More</a>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination-wrap position-absolute w-100">
+        <div class="container">
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <div class="swiper-button-next flex justify-content-center align-items-center">
+        <span>
+          <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
+          </svg>
+        </span>
+      </div>
+      <div class="swiper-button-prev flex justify-content-center align-items-center">
+        <span>
+          <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+          </svg>
+        </span>
       </div>
     </div>
-    <div class="nav-bar">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
-            <div class="site-branding d-flex align-items-center">
-              <a class="d-block" href="index.html" rel="home"><img class="d-block" src="{% static 'home/images/logo.png'%}" alt="logo"></a>
-            </div>
-            <nav class="site-navigation d-flex justify-content-end align-items-center">
-              <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                <li class="current-menu-item"><a href="index.html">Home</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="causes.html">Causes</a></li>
-                <li><a href="portfolio.html">Gallery</a></li>
-                <li><a href="news.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="{% url 'user_login' %}">Account</a></li>
-              </ul>
-            </nav>
-            <div class="hamburger-menu d-lg-none">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="swiper-container hero-slider">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide hero-content-wrap">
-        <img src="{% static 'home/images/hero.jpg '%}" alt>
-        <div class="hero-content-overlay position-absolute w-100 h-100">
-          <div class="container h-100">
-            <div class="row h-100">
-              <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                <header class="entry-header">
-                  <h1>Donate</h1>
-                  <h4>4 a better world</h4>
-                </header>
-                <div class="entry-content mt-4">
-                  <p>Welcome to Our Charity Event!
-                    At our heart, we believe in making a difference. 🌟 Our charity event serves two vital purposes: raising awareness for a specific cause and raising funds to create real impact.
-                    
-                    What We Stand For
-                    Our charity is more than just an organization; it’s a movement. We’re passionate about transforming lives, one step at a time. Whether it’s providing education, supporting healthcare, or championing environmental causes, we’re committed to leaving a positive mark on the world.</p>
-                </div>
-                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                  <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                  <a href="#" class="btn orange-border">Read More</a>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide hero-content-wrap">
-        <img src="{% static 'home/images/education.webp '%}" alt>
-        <div class="hero-content-overlay position-absolute w-100 h-100">
-          <div class="container h-100">
-            <div class="row h-100">
-              <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                <header class="entry-header">
-                  <h1>Donate</h1>
-                  <h4>4 a better world</h4>
-                </header>
-                <div class="entry-content mt-4">
-                  <p>“Stardust & Impact”
-                    Lights, camera, action! ✨ Our charity event isn’t just an event; it’s a spectacle. Picture this: A red carpet adorned with stars (both celestial and celebrity). Champagne flutes clinking, diamonds winking—welcome to The Glamorous Gala.
-                    
-                    Here, we blend philanthropy with pizzazz. Our auctioneer wears sequins, our donors wear tuxedos, and our cause wears a tiara. From live performances to exclusive art exhibits, this is where impact meets elegance.
-                    
-                    So grab your ticket and strike a pose. Because changing lives never looked this good.</p>
-                </div>
-                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                  <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                  <a href="#" class="btn orange-border">Read More</a>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide hero-content-wrap">
-        <img src="{% static 'home/images/charity-kids.webp '%}" alt>
-        <div class="hero-content-overlay position-absolute w-100 h-100">
-          <div class="container h-100">
-            <div class="row h-100">
-              <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                <header class="entry-header">
-                  <h1>Donate</h1>
-                  <h4>4 a better world</h4>
-                </header>
-                <div class="entry-content mt-4">
-                  <p>“Quest for Change”
-                    Calling all adventurers! 🌍 Ready for an epic journey? Our charity event isn’t your typical soirée—it’s an expedition. The Adventure Quest: treasure maps, hidden clues, and a cause worth fighting for.
-                    
-                    We’ll sail uncharted waters (metaphorically), climb metaphorical peaks, and unlock metaphorical chests of gold (okay, maybe some real ones too). Whether it’s a charity run through rugged terrain or a scavenger hunt in the heart of the city, this event is adrenaline-fueled impact.
-                    
-                    Gear up—your quest awaits!
-                    
-                    </p>
-                </div>
-                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                  <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                  <a href="#" class="btn orange-border">Read More</a>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="pagination-wrap position-absolute w-100">
-      <div class="container">
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
-
-    <div class="swiper-button-next flex justify-content-center align-items-center">
-      <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
-        </svg></span>
-    </div>
-    <div class="swiper-button-prev flex justify-content-center align-items-center">
-      <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
-        </svg></span>
-    </div>
-  </div>
-  <div class="home-page-icon-boxes">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-          <div class="icon-box">
-            <figure class="d-flex justify-content-center">
-              <img src="{% static 'home/images/hands-gray.png '%}" alt>
-              <img src="{% static 'home/images/hands-white.png '%}" alt>
-            </figure>
-            <header class="entry-header">
-              <h3 class="entry-title">Become a Volunteer</h3>
-            </header>
-            <div class="entry-content">
-              <p>You&apos;ll be the heartbeat of our charity event.Your mission? To rally passionate individuals, channel their energy, and create meaningful impact.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-          <div class="icon-box">
-            <figure class="d-flex justify-content-center">
-              <img src="{% static 'home/images/donation-gray.png'%}" alt>
-              <img src="{% static 'home/images/donation-white.png'%}" alt>
-            </figure>
-            <header class="entry-header">
-              <h3 class="entry-title">Dance & Music</h3>
-            </header>
-            <div class="entry-content">
-              <p>You&apos;re not just joining an event—you&apos;re joining a movement. Your mission? To be the heartbeat that resonates far beyond the dance floor.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-          <div class="icon-box">
-            <figure class="d-flex justify-content-center">
-              <img src="{% static 'home/images/charity-gray.png'%}" alt>
-              <img src="{% static 'home/images/charity-white.png'%}" alt>
-            </figure>
-            <header class="entry-header">
-              <h3 class="entry-title">Online Conference</h3>
-            </header>
-            <div class="entry-content">
-              <p>You&apos;re not just logging in; you&apos;re joining a movement.Mission? To rally fellow fundraisers,ignite conversations & create waves of impact.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="home-page-welcome">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-lg-6 order-2 order-lg-1">
-          <div class="welcome-content">
-            <header class="entry-header">
-              <h2 class="entry-title">Welcome to our Charity</h2>
-            </header>
-            <div class="entry-content mt-5">
-              <p>Welcome to Acts of Kindness Association! Thank you for stopping by! Were a nonprofit agency dedicated to delivering quality service to our local residents. All of our proceeds contribute to building a state-of-the-art community center in Town Square. Want to help us spread kindness?❤️<br><br>
-
-                Remember, every action you take here adds a note of compassion to our symphony of impact. Together, we can create positive change! 🌎🎵</p>
-            </div>
-            <div class="entry-footer mt-5">
-              <a href="#" class="btn gradient-bg mr-2">Read More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6 mt-4 order-1 order-lg-2">
-          <img src="{% static 'home/images/welcome.jpg'%}" alt="welcome">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="home-page-events">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-lg-6">
-          <div class="upcoming-events">
-            <div class="section-heading">
-              <h2 class="entry-title">Upcoming Events</h2>
-            </div>
-            <div class="event-wrap d-flex flex-wrap justify-content-between">
-              <figure class="m-0">
-                <img src="{% static 'home/images/event-1.jpg'%}" alt>
-              </figure>
-              <div class="event-content-wrap">
-                <header class="entry-header d-flex flex-wrap align-items-center">
-                  <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
-                  <div class="posted-date">
-                    <a href="#">Nov 14, 2023 </a>
-                  </div>
-                  <div class="cats-links">
-                    <a href="#">Ball Room New York</a>
-                  </div>
-                </header>
-                <div class="entry-content">
-                  <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                    mauris.</p>
-                </div>
-                <div class="entry-footer">
-                  <a href="#">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="event-wrap d-flex flex-wrap justify-content-between">
-              <figure class="m-0">
-                <img src="{% static 'home/images/event-2.jpg'%}" alt>
-              </figure>
-              <div class="event-content-wrap">
-                <header class="entry-header d-flex flex-wrap align-items-center">
-                  <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                  <div class="posted-date">
-                    <a href="#">Nov 25, 2023 </a>
-                  </div>
-                  <div class="cats-links">
-                    <a href="#">Ball Room New York</a>
-                  </div>
-                </header>
-                <div class="entry-content">
-                  <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                    mauris.</p>
-                </div>
-                <div class="entry-footer">
-                  <a href="#">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="event-wrap d-flex flex-wrap justify-content-between">
-              <figure class="m-0">
-                <img src="{% static 'home/images/event-3.jpg'%}" alt>
-              </figure>
-              <div class="event-content-wrap">
-                <header class="entry-header d-flex flex-wrap align-items-center">
-                  <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                  <div class="posted-date">
-                    <a href="#">Nov 30, 2023 </a>
-                  </div>
-                  <div class="cats-links">
-                    <a href="#">Ball Room New York</a>
-                  </div>
-                </header>
-                <div class="entry-content">
-                  <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                    mauris.</p>
-                </div>
-                <div class="entry-footer">
-                  <a href="#">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="featured-cause">
-            <div class="section-heading">
-              <h2 class="entry-title">Featured Cause</h2>
-            </div>
-            <div class="cause-wrap d-flex flex-wrap justify-content-between">
-              <figure class="m-0">
-                <img src="{% static 'home/images/featured-causes.jpg'%}" alt>
-              </figure>
-              <div class="cause-content-wrap">
-                <header class="entry-header d-flex flex-wrap align-items-center">
-                  <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
-                  <div class="posted-date">
-                    <a href="#">Jan 1, 2024 </a>
-                  </div>
-                  <div class="cats-links">
-                    <a href="#">Ball Room New York</a>
-                  </div>
-                </header>
-                <div class="entry-content">
-                  <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                    mauris. Lorem ipsum dolor sit amet, consectetur.</p>
-                </div>
-                <div class="entry-footer mt-5">
-                  <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                </div>
-              </div>
-              <div class="fund-raised w-100">
-                <div class="featured-fund-raised-bar barfiller">
-                  <div class="tipWrap">
-                    <span class="tip"></span>
-                  </div>
-                  <span class="fill" data-percentage="83"></span>
-                </div>
-                <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                  <div class="fund-raised-total mt-4">
-                    Raised: $56 880
-                  </div>
-                  <div class="fund-raised-goal mt-4">
-                    Goal: $70 000
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="our-causes">
-    <div class="container">
-      <div class="row">
-        <div class="coL-12">
-          <div class="section-heading">
-            <h2 class="entry-title">Our Causes</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="swiper-container causes-slider">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-1.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-1 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="83"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-2.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-2 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="70"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-3.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-3 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="83"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-1.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-4 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="83"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-2.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-5 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="70"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="cause-wrap">
-                  <figure class="m-0">
-                    <img src="{% static 'home/images/cause-3.jpg'%}" alt>
-                    <div
-                      class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                      <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                    </div>
-                  </figure>
-                  <div class="cause-content-wrap">
-                    <header class="entry-header d-flex flex-wrap align-items-center">
-                      <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                    </header>
-                    <div class="entry-content">
-                      <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum
-                        mauris.</p>
-                    </div>
-                    <div class="fund-raised w-100">
-                      <div class="fund-raised-bar-6 barfiller">
-                        <div class="tipWrap">
-                          <span class="tip"></span>
-                        </div>
-                        <span class="fill" data-percentage="83"></span>
-                      </div>
-                      <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="fund-raised-total mt-4">
-                          Raised: $56 880
-                        </div>
-                        <div class="fund-raised-goal mt-4">
-                          Goal: $70 000
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="swiper-button-next flex justify-content-center align-items-center">
-            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
-              </svg></span>
-          </div>
-          <div class="swiper-button-prev flex justify-content-center align-items-center">
-            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
-              </svg></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="home-page-limestone">
-    <div class="container">
-      <div class="row align-items-end">
-        <div class="coL-12 col-lg-6">
-          <div class="section-heading">
-            <h2 class="entry-title">We love to help all the children that have problems in the world. After 15 years we
-              have many goals achieved.</h2>
-            <p class="mt-5">Dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam.
-              Lorem ipsum dolor sit amet.</p>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="milestones d-flex flex-wrap justify-content-between">
-            <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-              <div class="counter-box">
-                <div class="d-flex justify-content-center align-items-center">
-                  <img src="{% static 'home/images/teamwork.png'%}" alt>
-                </div>
-                <div class="d-flex justify-content-center align-items-baseline">
-                  <div class="start-counter" data-to="120" data-speed="2000"></div>
-                  <div class="counter-k">K</div>
-                </div>
-                <h3 class="entry-title">Children helped</h3>
-              </div>
-            </div>
-            <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-              <div class="counter-box">
-                <div class="d-flex justify-content-center align-items-center">
-                  <img src="{% static 'home/images/donation.png'%}" alt>
-                </div>
-                <div class="d-flex justify-content-center align-items-baseline">
-                  <div class="start-counter" data-to="79" data-speed="2000"></div>
-                </div>
-                <h3 class="entry-title">Water wells</h3>
-              </div>
-            </div>
-            <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-              <div class="counter-box">
-                <div class="d-flex justify-content-center align-items-center">
-                  <img src="{% static 'home/images/dove.png'%}" alt>
-                </div>
-                <div class="d-flex justify-content-center align-items-baseline">
-                  <div class="start-counter" data-to="253" data-speed="2000"></div>
-                </div>
-                <h3 class="entry-title">Volunteeres</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer class="site-footer">
-    <div class="footer-widgets">
+    <div class="home-page-icon-boxes">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="foot-about">
-              <h2><a class="foot-logo" href="#"><img src="{% static 'home/images/foot-logo.png'%}" alt></a></h2>
-              <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
-              <ul class="d-flex flex-wrap align-items-center">
-                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-              </ul>
+          <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+            <div class="icon-box">
+              <figure class="d-flex justify-content-center">
+                <img src="{% static 'home/images/hands-gray.png' %}" alt />
+                <img src="{% static 'home/images/hands-white.png' %}" alt />
+              </figure>
+              <header class="entry-header">
+                <h3 class="entry-title">Become a Volunteer</h3>
+              </header>
+              <div class="entry-content">
+                <p>You&apos;ll be the heartbeat of our charity event.Your mission? To rally passionate individuals, channel their energy, and create meaningful impact.</p>
+              </div>
             </div>
           </div>
-          <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-            <h2>Useful Links</h2>
-            <ul>
-              <li><a href="#">Privacy Polticy</a></li>
-              <li><a href="#">Become a Volunteer</a></li>
-              <li><a href="#">Donate</a></li>
-              <li><a href="#">Testimonials</a></li>
-              <li><a href="#">Causes</a></li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#">News</a></li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-            <div class="foot-latest-news">
-              <h2>Latest News</h2>
-              <ul>
-                <li>
-                  <h3><a href="#">A new cause to help</a></h3>
-                  <div class="posted-date">MArch 12, 2018</div>
-                </li>
-                <li>
-                  <h3><a href="#">We love to help people</a></h3>
-                  <div class="posted-date">MArch 12, 2018</div>
-                </li>
-                <li>
-                  <h3><a href="#">The new ideas for helping</a></h3>
-                  <div class="posted-date">MArch 12, 2018</div>
-                </li>
-              </ul>
+          <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+            <div class="icon-box">
+              <figure class="d-flex justify-content-center">
+                <img src="{% static 'home/images/donation-gray.png' %}" alt />
+                <img src="{% static 'home/images/donation-white.png' %}" alt />
+              </figure>
+              <header class="entry-header">
+                <h3 class="entry-title">Dance & Music</h3>
+              </header>
+              <div class="entry-content">
+                <p>You&apos;re not just joining an event—you&apos;re joining a movement. Your mission? To be the heartbeat that resonates far beyond the dance floor.</p>
+              </div>
             </div>
           </div>
-          <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-            <div class="foot-contact">
-              <h2>Contact</h2>
-              <ul>
-                <li><i class="fa fa-phone"></i><span>+91-9876543210</span></li>
-                <li><i class="fa fa-envelope"></i><span>contact@charity.com</span></li>
-                <li><i class="fa fa-map-marker"></i><span>Sree Narayana Gurukulam Ernakulam</span></li>
-              </ul>
-            </div>
-            <div class="subscribe-form">
-              <form class="d-flex flex-wrap align-items-center">
-                <input type="email" placeholder="Your email">
-                <input type="submit" value="send">
-              </form>
+          <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+            <div class="icon-box">
+              <figure class="d-flex justify-content-center">
+                <img src="{% static 'home/images/charity-gray.png' %}" alt />
+                <img src="{% static 'home/images/charity-white.png' %}" alt />
+              </figure>
+              <header class="entry-header">
+                <h3 class="entry-title">Online Conference</h3>
+              </header>
+              <div class="entry-content">
+                <p>You&apos;re not just logging in; you&apos;re joining a movement.Mission? To rally fellow fundraisers,ignite conversations & create waves of impact.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer-bar">
+    <div class="home-page-welcome">
       <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <div class="welcome-content">
+              <header class="entry-header">
+                <h2 class="entry-title">Welcome to our Charity</h2>
+              </header>
+              <div class="entry-content mt-5">
+                <p>
+                  Welcome to Acts of Kindness Association! Thank you for stopping by! Were a nonprofit agency dedicated to delivering quality service to our local residents. All of our proceeds contribute to building a state-of-the-art community center in Town Square. Want to help us spread kindness?❤️<br /><br />
+
+                  Remember, every action you take here adds a note of compassion to our symphony of impact. Together, we can create positive change! 🌎🎵
+                </p>
+              </div>
+              <div class="entry-footer mt-5">
+                <a href="#" class="btn gradient-bg mr-2">Read More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 mt-4 order-1 order-lg-2">
+            <img src="{% static 'home/images/welcome.jpg' %}" alt="welcome" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home-page-events">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="upcoming-events">
+              <div class="section-heading">
+                <h2 class="entry-title">Upcoming Events</h2>
+              </div>
+              <div class="event-wrap d-flex flex-wrap justify-content-between">
+                <figure class="m-0">
+                  <img src="{% static 'home/images/event-1.jpg' %}" alt />
+                </figure>
+                <div class="event-content-wrap">
+                  <header class="entry-header d-flex flex-wrap align-items-center">
+                    <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
+                    <div class="posted-date">
+                      <a href="#">Nov 14, 2023</a>
+                    </div>
+                    <div class="cats-links">
+                      <a href="#">Ball Room New York</a>
+                    </div>
+                  </header>
+                  <div class="entry-content">
+                    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                  </div>
+                  <div class="entry-footer">
+                    <a href="#">Read More</a>
+                  </div>
+                </div>
+              </div>
+              <div class="event-wrap d-flex flex-wrap justify-content-between">
+                <figure class="m-0">
+                  <img src="{% static 'home/images/event-2.jpg' %}" alt />
+                </figure>
+                <div class="event-content-wrap">
+                  <header class="entry-header d-flex flex-wrap align-items-center">
+                    <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                    <div class="posted-date">
+                      <a href="#">Nov 25, 2023</a>
+                    </div>
+                    <div class="cats-links">
+                      <a href="#">Ball Room New York</a>
+                    </div>
+                  </header>
+                  <div class="entry-content">
+                    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                  </div>
+                  <div class="entry-footer">
+                    <a href="#">Read More</a>
+                  </div>
+                </div>
+              </div>
+              <div class="event-wrap d-flex flex-wrap justify-content-between">
+                <figure class="m-0">
+                  <img src="{% static 'home/images/event-3.jpg' %}" alt />
+                </figure>
+                <div class="event-content-wrap">
+                  <header class="entry-header d-flex flex-wrap align-items-center">
+                    <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                    <div class="posted-date">
+                      <a href="#">Nov 30, 2023</a>
+                    </div>
+                    <div class="cats-links">
+                      <a href="#">Ball Room New York</a>
+                    </div>
+                  </header>
+                  <div class="entry-content">
+                    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                  </div>
+                  <div class="entry-footer">
+                    <a href="#">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="featured-cause">
+              <div class="section-heading">
+                <h2 class="entry-title">Featured Cause</h2>
+              </div>
+              <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                <figure class="m-0">
+                  <img src="{% static 'home/images/featured-causes.jpg' %}" alt />
+                </figure>
+                <div class="cause-content-wrap">
+                  <header class="entry-header d-flex flex-wrap align-items-center">
+                    <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
+                    <div class="posted-date">
+                      <a href="#">Jan 1, 2024</a>
+                    </div>
+                    <div class="cats-links">
+                      <a href="#">Ball Room New York</a>
+                    </div>
+                  </header>
+                  <div class="entry-content">
+                    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris. Lorem ipsum dolor sit amet, consectetur.</p>
+                  </div>
+                  <div class="entry-footer mt-5">
+                    <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                  </div>
+                </div>
+                <div class="fund-raised w-100">
+                  <div class="featured-fund-raised-bar barfiller">
+                    <div class="tipWrap">
+                      <span class="tip"></span>
+                    </div>
+                    <span class="fill" data-percentage="83"></span>
+                  </div>
+                  <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                    <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="our-causes">
+      <div class="container">
+        <div class="row">
+          <div class="coL-12">
+            <div class="section-heading">
+              <h2 class="entry-title">Our Causes</h2>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
-            <p class="m-0">
-              
-            </p>
+            <div class="swiper-container causes-slider">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-1.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-1 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="83"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-2.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-2 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="70"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-3.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-3 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="83"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-1.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-4 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="83"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-2.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-5 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="70"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cause-wrap">
+                    <figure class="m-0">
+                      <img src="{% static 'home/images/cause-3.jpg' %}" alt />
+                      <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
+                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                      </div>
+                    </figure>
+                    <div class="cause-content-wrap">
+                      <header class="entry-header d-flex flex-wrap align-items-center">
+                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
+                      </header>
+                      <div class="entry-content">
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
+                      </div>
+                      <div class="fund-raised w-100">
+                        <div class="fund-raised-bar-6 barfiller">
+                          <div class="tipWrap">
+                            <span class="tip"></span>
+                          </div>
+                          <span class="fill" data-percentage="83"></span>
+                        </div>
+                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="fund-raised-total mt-4">Raised: $56 880</div>
+                          <div class="fund-raised-goal mt-4">Goal: $70 000</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-button-next flex justify-content-center align-items-center">
+              <span>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
+                </svg>
+              </span>
+            </div>
+            <div class="swiper-button-prev flex justify-content-center align-items-center">
+              <span>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </footer>
-  <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/jquery.collapsible.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/swiper.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/jquery.countdown.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/circle-progress.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/jquery.countTo.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/jquery.barfiller.js' %}"></script>
-  <script type="text/javascript" src="{% static 'home/js/custom.js' %}"></script>
+    <div class="home-page-limestone">
+      <div class="container">
+        <div class="row align-items-end">
+          <div class="coL-12 col-lg-6">
+            <div class="section-heading">
+              <h2 class="entry-title">We love to help all the children that have problems in the world. After 15 years we have many goals achieved.</h2>
+              <p class="mt-5">Dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="milestones d-flex flex-wrap justify-content-between">
+              <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                <div class="counter-box">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <img src="{% static 'home/images/teamwork.png' %}" alt />
+                  </div>
+                  <div class="d-flex justify-content-center align-items-baseline">
+                    <div class="start-counter" data-to="120" data-speed="2000"></div>
+                    <div class="counter-k">K</div>
+                  </div>
+                  <h3 class="entry-title">Children helped</h3>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                <div class="counter-box">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <img src="{% static 'home/images/donation.png' %}" alt />
+                  </div>
+                  <div class="d-flex justify-content-center align-items-baseline">
+                    <div class="start-counter" data-to="79" data-speed="2000"></div>
+                  </div>
+                  <h3 class="entry-title">Water wells</h3>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                <div class="counter-box">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <img src="{% static 'home/images/dove.png' %}" alt />
+                  </div>
+                  <div class="d-flex justify-content-center align-items-baseline">
+                    <div class="start-counter" data-to="253" data-speed="2000"></div>
+                  </div>
+                  <h3 class="entry-title">Volunteeres</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-widgets">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="foot-about">
+                <h2><a class="foot-logo" href="#"><img src="{% static 'home/images/foot-logo.png' %}" alt /></a></h2>
+                <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
+                <ul class="d-flex flex-wrap align-items-center">
+                  <li>
+                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-dribbble"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-behance"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+              <h2>Useful Links</h2>
+              <ul>
+                <li>
+                  <a href="#">Privacy Polticy</a>
+                </li>
+                <li>
+                  <a href="#">Become a Volunteer</a>
+                </li>
+                <li>
+                  <a href="#">Donate</a>
+                </li>
+                <li>
+                  <a href="#">Testimonials</a>
+                </li>
+                <li>
+                  <a href="#">Causes</a>
+                </li>
+                <li>
+                  <a href="#">Portfolio</a>
+                </li>
+                <li>
+                  <a href="#">News</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+              <div class="foot-latest-news">
+                <h2>Latest News</h2>
+                <ul>
+                  <li>
+                    <h3><a href="#">A new cause to help</a></h3>
+                    <div class="posted-date">MArch 12, 2018</div>
+                  </li>
+                  <li>
+                    <h3><a href="#">We love to help people</a></h3>
+                    <div class="posted-date">MArch 12, 2018</div>
+                  </li>
+                  <li>
+                    <h3><a href="#">The new ideas for helping</a></h3>
+                    <div class="posted-date">MArch 12, 2018</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+              <div class="foot-contact">
+                <h2>Contact</h2>
+                <ul>
+                  <li>
+                    <i class="fa fa-phone"></i><span>+91-9876543210</span>
+                  </li>
+                  <li>
+                    <i class="fa fa-envelope"></i><span>contact@charity.com</span>
+                  </li>
+                  <li>
+                    <i class="fa fa-map-marker"></i><span>Sree Narayana Gurukulam Ernakulam</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="subscribe-form">
+                <form class="d-flex flex-wrap align-items-center">
+                  <input type="email" placeholder="Your email" />
+                  <input type="submit" value="send" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <p class="m-0"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.collapsible.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/swiper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.countdown.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/circle-progress.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.countTo.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.barfiller.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/custom.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script>
+      function TriggerModal() {
+        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {})
+        myModal.show()
+      }
+      
+      function submitForm() {
+    // Assuming that the modal element has the ID 'EditModal'
+    let myModalElement = document.getElementById('EditModal');
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    // Check if the modal element exists before creating a new instance
+    if (myModalElement) {
+        console.log("in modal ")
+        let myModal = new bootstrap.Modal(myModalElement, {});
 
-    gtag('config', 'UA-23581568-13');
-  </script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"
-    integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg=="
-    data-cf-beacon='{"rayId":"81412c435b5d1190","version":"2023.8.0","b":1,"token":"cd0b4b3a733644fc843ef0b185f98241","si":100}'
-    crossorigin="anonymous"></script>
-</body>
+        event.preventDefault();
+        var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
+        // Assuming you have an element with the ID 'data-amount' for the order amount
+        var orderAmount = document.getElementById('data-amount').value;
+        var orderName = document.getElementById('data-name').value;
+        var orderPhone = document.getElementById('data-phone').value;
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'create_order' %}",
+            data: {
+                amount: orderAmount,
+                name: orderName,
+                phone:orderPhone,
+                csrfmiddlewaretoken: csrf_token
+            },
+            success: function (response) {
+
+                    console.log(response);
+                    initiateRazorpayPayment(response);
+
+                    myModal.hide();
+
+            },
+            error: function (xhr, errmsg, err) {
+                alert('Error: Something went wrong. Please try again.');
+            }
+        });
+    }
+}
+
+      
+      function initiateRazorpayPayment(orderDetails) {
+
+        // Initialize Razorpay with the order details obtained from the backend
+        var options = {
+          key: orderDetails.razorpay_merchant_key,
+          amount: orderDetails.razorpay_amount,
+          currency: orderDetails.currency,
+          name: 'Dj Razorpay',
+          order_id: orderDetails.razorpay_order_id,
+          callback_url: orderDetails.callback_url
+        }
+      
+        // Create a new Razorpay instance
+        var rzp1 = new Razorpay(options)
+      
+        // Open the payment modal
+        rzp1.open()
+      }
+      
+      // Add event listener to the form submission button
+      document.getElementById('submit-btn').onclick = function (e) {
+        submitForm()
+        e.preventDefault()
+      }
+    </script>
+  </body>
 </html>
