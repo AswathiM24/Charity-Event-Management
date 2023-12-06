@@ -13,7 +13,6 @@
 
 
 
-
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 
   <link href="{% static 'user/dashboard/assets/css/nucleo-icons.css' %} " rel="stylesheet" />
@@ -40,14 +39,6 @@
       <a class="navbar-brand text-center w-100 font-weight-bolder ms-lg-0 ms-3 text-white" href="#">
         Charity Event Management
       </a>
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon mt-2">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </span>
-      </button>
     </div>
   </nav>
 
@@ -139,6 +130,11 @@
                     <a onclick="password_reset()" class="form-check-label text-danger">forgot password</a>
                   </div>
                 </div>
+                  {% if code == 401 %}
+                  	<div class="text-center">
+                      <label class="form-check-label text-danger">Login failed,Please ensure your credentials are correct</label>
+                    </div>
+                  {% endif %}
                 <div class="text-center">
                   <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Sign in</button>
                 </div>

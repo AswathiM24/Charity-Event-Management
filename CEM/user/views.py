@@ -38,6 +38,7 @@ def login(request):
         except Exception as e:
             print('Login failed')
             res['status'] = 'Login failed'
+            res['code'] = 401  # not authenticated
             return render(request, 'user/login.html', res)
 
     return render(request, 'user/login.html')
