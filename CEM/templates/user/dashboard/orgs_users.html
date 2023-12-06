@@ -1,24 +1,13 @@
 {% extends 'user/dashboard/Parent.html' %} {% load static%} {% block content %}
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="EditModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
-        <button
-          type="button"
-          class="btn-close text-dark"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -29,7 +18,7 @@
             <input type="hidden" name="id" id="data-id">
             <div class="row">
               <div class="col-3">
-                <label for="name">Org.Name</label>
+                <label for="name">Name</label>
               </div>
               <div class="col-9">
                 <input style="width: 100%;" type="text" name="name" id="data-name" required />
@@ -40,7 +29,15 @@
                 <label for="name">Email</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="email" id="data-email"  required />
+                <input style="width: 100%;" type="text" name="email" id="data-email" required />
+              </div>
+            </div>
+             <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Password</label>
+              </div>
+              <div class="col-9">
+                <input style="width: 100%;" type="text" name="password" id="data-email" required />
               </div>
             </div>
 
@@ -56,13 +53,26 @@
 
             <div class="row mt-2">
               <div class="col-3">
-                <label for="name">Address</label>
+                <label for="name">Organisation</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="address" id="data-address" required />
+                <select class="btn bg-gradient-secondary" name="orgs">
+
+                    {% for org in organisation %}
+                        <option class="btn bg-gradient-secondary " value="{{ org.id }}">
+                          <a class="dropdown-item" href="javascript:;">
+                            {{ org.name }}
+                          </a>
+                        </option>
+                      {% endfor %}
+
+                </select>
+
+
+
               </div>
             </div>
-            
+
             <div class="row mt-2">
               <div class="col-3">
                 <label for="name">Status</label>
@@ -70,30 +80,39 @@
               <div class="col-9">
                 <div class="form-check form-switch">
                   <input class="form-check-input" name="status" type="checkbox" id="data-status">
-                </div>              
+                </div>
               </div>
             </div>
-            
-
- 
 
             <div class="row mt-2">
               <div class="col-3">
-                <label for="name">Fund Raised</label>
+                <label for="name">Admin</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="fund_raised" id="data-fund" required />
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="admin" type="checkbox" id="data-admin">
+                </div>
               </div>
             </div>
+
+              <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Volunteer</label>
+              </div>
+              <div class="col-9">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="volunteer" type="checkbox" id="data-staff">
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn bg-gradient-secondary"
-          data-bs-dismiss="modal"
-        >
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
           Close
         </button>
         <button onclick="submitForm();" type="button" class="btn bg-gradient-primary">
@@ -108,102 +127,84 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h5 class="mb-0">Staff Management</h5>
+        <div class="d-flex justify-content-between">
+          <h5 class="mb-0">Staff Management</h5>
+          <a role="button" class="btn btn-dark btn-round" onclick="NewUser()"><span class="text-sans-serif"><i
+                class="fa fa-plus"> New Org</i></span></a>
+        </div>
         <p class="text-sm mb-0">Registered Members </p>
       </div>
       <div class="table-responsive">
-        <table
-          style="text-align: center"
-          class="table p-2 table-flush"
-          id="datatable-basic"
-        >
+        <table style="text-align: center" class="table p-2 table-flush" id="datatable-basic">
           <thead class="thead-light">
             <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Name
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Locaiton
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Email
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Phone
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Organisation
+              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Active
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Fund
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Is Admin
               </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Is Volunteer
+              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 More
               </th>
             </tr>
           </thead>
           <tbody>
-            {% for organisation in organizations %}
+            {% for user in users %}
             <tr>
               <td class="text-sm font-weight-normal">
-                {{ organisation.name }}
+                {{ user.name }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.address }}
+                {{ user.email }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.email }}
+                {{ user.phone }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ organisation.phone }}
+                {{ user.organization.name }}
               </td>
               <td class="text-sm font-weight-normal">
-                {% if organisation.status %} {{'Active'}} {% else %} {{'Deactive'}} {% endif %}
+                {% if user.is_active %} {{'Active'}} {% else %} {{'Deactive'}} {% endif %}
               </td>
               <td class="text-sm font-weight-normal">
-                ${{ organisation.fund_raised }}
+                {% if user.is_admin %} {{'Admin'}} {% else %} {{'Not'}} {% endif %}
               </td>
-              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{organisation.name}}','{{organisation.email}}','{{organisation.phone}}','{{organisation.address}}','{{organisation.fund_raised}}','{{organisation.id}}','{{organisation.status}}');"</td>
+            <td class="text-sm font-weight-normal">
+                {% if user.is_staff %} {{'Volunteer'}} {% else %} {{'Not'}} {% endif %}
+              </td>
+              <td class="text-sm font-weight-normal"
+                onclick="TriggerModal('{{user.name}}','{{user.email}}','{{user.phone}}','{{user.organization.name}}','{{user.is_active}}','{{user.is_admin}}','{{user.is_staff}}','{{user.id}}');"
+                </td>
                 <a role="button">
-                  <svg
-                    width="20"
-                    fill="#000000"
-                    version="1.1"
-                    id="Capa_1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 494.936 494.936"
-                    xml:space="preserve"
-                  >
+                  <svg width="20" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 494.936 494.936" xml:space="preserve">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g
-                      id="SVGRepo_tracerCarrier"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                     <g id="SVGRepo_iconCarrier">
                       <g>
                         <g>
                           <path
-                            d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157 c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21 s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741 c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"
-                          ></path>
+                            d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157 c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21 s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741 c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z">
+                          </path>
                           <path
-                            d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069 c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963 c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692 C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107 l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005 c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"
-                          ></path>
+                            d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069 c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963 c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692 C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107 l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005 c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z">
+                          </path>
                         </g>
                       </g>
                     </g>
@@ -222,29 +223,44 @@
 
 <script type="text/javascript">
 
-    function TriggerModal(name,email,phone,address,fund,id,status){
-        //console.log({name,email,phone,address,fund});
-        document.getElementById('data-id').value = id;
-        document.getElementById('data-name').value = name;
-        document.getElementById('data-email').value = email;
-        document.getElementById('data-address').value = address;
-        document.getElementById('data-fund').value = fund;
-        document.getElementById('data-phone').value = phone;
-        if(status == 'True'){
-          document.getElementById('data-status').checked =true;
-        }else{
-          document.getElementById('data-status').checked =false;
-        }
-        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
-myModal.show();
-
+  function TriggerModal(name, email, phone, org_name, status, admin, staff,id) {
+    //console.log({name,email,phone,address,fund});
+    document.getElementById('data-id').value = id;
+    document.getElementById('data-name').value = name;
+    document.getElementById('data-email').value = email;
+    document.getElementById('data-phone').value = phone;
+    if (status == 'True') {
+      document.getElementById('data-status').checked = true;
+    } else {
+      document.getElementById('data-status').checked = false;
     }
-
-    function submitForm(){
-      document.getElementById('modal-org-form').submit();
-      let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
-myModal.close();
+    if (admin == 'True') {
+      document.getElementById('data-admin').checked = true;
+    } else {
+      document.getElementById('data-admin').checked = false;
     }
+    if (staff == 'True') {
+      document.getElementById('data-staff').checked = true;
+    } else {
+      document.getElementById('data-staff').checked = false;
+    }
+    let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+    myModal.show();
+
+  }
+
+  function NewUser() {
+    document.getElementById('data-id').value = -1;
+    let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+    myModal.show();
+  }
+
+
+  function submitForm() {
+    document.getElementById('modal-org-form').submit();
+    let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+    myModal.close();
+  }
 </script>
 
 

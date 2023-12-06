@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .models import User, Organization, Events
 from .decorator import useronly
 from django.core.mail import send_mail
-
+from organisations.models import Login, UserInfo
 import random
 
 
@@ -194,5 +194,36 @@ def show_organizations_users(request):
     context['active'] = 'organisation_users_list'
     context['main_page'] = 'Organisation'
     context['sub_page'] = 'Staff Management'
+    context['organisation'] = Organization.objects.all()
+    context['users'] = UserInfo.objects.all()
+    if request.method == 'POST':
+        print(request.POST)
+        id = request.POST['id']
+        if id == '-1':
+            user_obj = UserInfo()
+            login_obj = Login()
+        else:
+            user_obj = UserInfo.objects.get(id=id)
+            login_obj = Login.objects.get(id=user_obj.auth.id)
+
+        organisation = Organization.objects.get(id=request.POST['orgs'])
+
+        login_obj.email = request.POST['email']
+        if request.POST['password'] != '':
+            login_obj.password = request.POST['password']
+        login_obj.status = True if 'status' in request.POST.keys() else False
+        login_obj.organization = organisation
+        login_obj.save()
+
+        user_obj.name = request.POST['name']
+        user_obj.email = request.POST['email']
+        user_obj.phone = request.POST['phone']
+        user_obj.organization = organisation
+        user_obj.auth = Login.objects.get(email=request.POST['email'])
+        user_obj.is_staff = True if 'volunteer' in request.POST.keys() else False
+        user_obj.is_active = True if 'status' in request.POST.keys() else False
+        user_obj.is_admin = True if 'admin' in request.POST.keys() else False
+
+        user_obj.save()
 
     return render(request, 'user/dashboard/orgs_users.html', context)
