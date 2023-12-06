@@ -164,6 +164,26 @@ def show_all_events(request):
     context['sub_page'] = 'Events Lists'
     context['events'] = Events.objects.all()
 
+    if request.method == 'POST':
+        print(request.POST)
+        id = request.POST['id']
+        if id == '-1':
+            obj = Events()
+        else:
+            obj = Events.objects.get(id=id)
+        obj.Name = request.POST['event_name']
+        obj.org_email = request.POST['org_email']
+        obj.org_name = request.POST['org_name']
+        obj.org_phone = request.POST['org_phone']
+        obj.description = request.POST['description']
+        obj.location = request.POST['location']
+        obj.ticket_price = request.POST['price']
+        obj.date = request.POST['event_date']
+        obj.organization = request.POST['hosted']
+        obj.is_active = True if 'status' in request.POST.keys() else False
+        obj.is_booking = True if 'is_booking' in request.POST.keys() else False
+        obj.save()
+
     return render(request, 'user/dashboard/Events_list.html', context)
 
 

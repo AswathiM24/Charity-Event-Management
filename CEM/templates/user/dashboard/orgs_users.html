@@ -1,7 +1,5 @@
 {% extends 'user/dashboard/Parent.html' %} {% load static%} {% block content %}
 
-
-
 <!-- Modal -->
 <div
   class="modal fade"
@@ -31,10 +29,10 @@
             <input type="hidden" name="id" id="data-id">
             <div class="row">
               <div class="col-3">
-                <label for="name">Name</label>
+                <label for="name">Org.Name</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="event_name" id="data-name" required />
+                <input style="width: 100%;" type="text" name="name" id="data-name" required />
               </div>
             </div>
             <div class="row mt-2">
@@ -42,16 +40,7 @@
                 <label for="name">Email</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="org_email" id="data-email"  required />
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Organiser</label>
-              </div>
-              <div class="col-9">
-                <input style="width: 100%;" type="text" name="org_name" id="data-organiser" required />
+                <input style="width: 100%;" type="text" name="email" id="data-email"  required />
               </div>
             </div>
 
@@ -61,79 +50,41 @@
                 <label for="name">Phone</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="org_phone" id="data-phone" required />
+                <input style="width: 100%;" type="text" name="phone" id="data-phone" required />
               </div>
             </div>
 
+            <div class="row mt-2">
+              <div class="col-3">
+                <label for="name">Address</label>
+              </div>
+              <div class="col-9">
+                <input style="width: 100%;" type="text" name="address" id="data-address" required />
+              </div>
+            </div>
+            
             <div class="row mt-2">
               <div class="col-3">
                 <label for="name">Status</label>
               </div>
               <div class="col-9">
                 <div class="form-check form-switch">
-                  <input class="form-check-input" name="status" type="checkbox" id="data-active">
-                </div>
+                  <input class="form-check-input" name="status" type="checkbox" id="data-status">
+                </div>              
               </div>
             </div>
+            
+
+ 
 
             <div class="row mt-2">
               <div class="col-3">
-                <label for="name">Description</label>
+                <label for="name">Fund Raised</label>
               </div>
               <div class="col-9">
-                <input style="width: 100%;" type="text" name="description" id="data-description" required />
+                <input style="width: 100%;" type="text" name="fund_raised" id="data-fund" required />
               </div>
             </div>
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Location</label>
-              </div>
-              <div class="col-9">
-                <input style="width: 100%;" type="text" name="location" id="data-location" required />
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Req. Booking</label>
-              </div>
-              <div class="col-9">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" name="is_booking" type="checkbox" id="data-booking">
-                </div>
-              </div>
-            </div>
-
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Prize</label>
-              </div>
-              <div class="col-9">
-                <input style="width: 100%;" type="text" name="price" id="data-price" required />
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Date</label>
-              </div>
-              <div class="col-9">
-                <input style="width: 100%;" type="date" name="event_date" id="data-date" required />
-              </div>
-            </div>
-
-
-            <div class="row mt-2">
-              <div class="col-3">
-                <label for="name">Hosted</label>
-              </div>
-              <div class="col-9">
-                <input style="width: 100%;" type="text" name="hosted" id="data-organisation" required />
-              </div>
-            </div>
-
           </div>
         </form>
       </div>
@@ -157,11 +108,8 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <div class="d-flex justify-content-between">
-            <h5 class="mb-0">Events</h5>
-            <button onclick="NewEventReg()" class="btn btn-round btn-dark"><span><i class="fa fa-plus"> Add Event</i></span></button>
-        </div>
-        <p class="text-sm mb-0">All event lists</p>
+        <h5 class="mb-0">Staff Management</h5>
+        <p class="text-sm mb-0">Registered Members </p>
       </div>
       <div class="table-responsive">
         <table
@@ -179,27 +127,27 @@
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Location
+                Locaiton
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Organiser
+                Email
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Contact
+                Phone
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Status
+                Active
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Date
+                Fund
               </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -209,27 +157,27 @@
             </tr>
           </thead>
           <tbody>
-            {% for event in events %}
+            {% for organisation in organizations %}
             <tr>
               <td class="text-sm font-weight-normal">
-                {{ event.Name }}
+                {{ organisation.name }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ event.location }}
+                {{ organisation.address }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ event.org_name }}
+                {{ organisation.email }}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ event.org_phone }}
+                {{ organisation.phone }}
               </td>
               <td class="text-sm font-weight-normal">
-                {% if event.is_active %} {{'Up Coming'}} {% else %} {{'Done'}} {% endif %}
+                {% if organisation.status %} {{'Active'}} {% else %} {{'Deactive'}} {% endif %}
               </td>
               <td class="text-sm font-weight-normal">
-                {{ event.date }}
+                ${{ organisation.fund_raised }}
               </td>
-              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{event.Name}}','{{event.description}}','{{event.location}}','{{event.org_name}}','{{event.org_email}}','{{event.org_phone}}','{{event.is_booking}}','{{event.ticket_price}}','{{event.is_active}}','{{event.date.isoformat}}','{{event.organization}}','{{event.id}}');"</td>
+              <td class="text-sm font-weight-normal" onclick="TriggerModal('{{organisation.name}}','{{organisation.email}}','{{organisation.phone}}','{{organisation.address}}','{{organisation.fund_raised}}','{{organisation.id}}','{{organisation.status}}');"</td>
                 <a role="button">
                   <svg
                     width="20"
@@ -274,41 +222,23 @@
 
 <script type="text/javascript">
 
-    function TriggerModal(name,description,location,org_name, org_email, org_phone,is_booking, ticket_price, is_Active,date, organization,id) {
+    function TriggerModal(name,email,phone,address,fund,id,status){
         //console.log({name,email,phone,address,fund});
         document.getElementById('data-id').value = id;
         document.getElementById('data-name').value = name;
-        document.getElementById('data-email').value = org_email;
-        document.getElementById('data-organiser').value = org_name;
-        document.getElementById('data-phone').value = org_phone;
-        document.getElementById('data-description').value = description;
-        document.getElementById('data-location').value = location;
-        document.getElementById('data-price').value = ticket_price;
-        document.getElementById('data-date').value = date;
-        document.getElementById('data-organisation').value = organization;
-        if(is_Active === 'True'){
-          document.getElementById('data-active').checked =true;
+        document.getElementById('data-email').value = email;
+        document.getElementById('data-address').value = address;
+        document.getElementById('data-fund').value = fund;
+        document.getElementById('data-phone').value = phone;
+        if(status == 'True'){
+          document.getElementById('data-status').checked =true;
         }else{
-          document.getElementById('data-active').checked =false;
+          document.getElementById('data-status').checked =false;
         }
-
-        if(is_booking === 'True'){
-          document.getElementById('data-booking').checked =true;
-        }else{
-          document.getElementById('data-booking').checked =false;
-        }
-
         let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
 myModal.show();
 
     }
-
-      function NewEventReg(){
-        document.getElementById('data-id').value = -1;
-        let myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
-myModal.show();
-    }
-
 
     function submitForm(){
       document.getElementById('modal-org-form').submit();
